@@ -11,7 +11,6 @@ class AppTheme {
         primary: Color(0xff023e8a),
         secondary: Color(0xff008080),
       ),
-      scaffoldBackgroundColor: Colors.grey.shade100,
       fontFamily: GoogleFonts.lato().fontFamily,
       textTheme: TextTheme(
         headline1: TextStyle(
