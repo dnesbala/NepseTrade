@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/config/app_links.dart';
 import 'package:get/get.dart';
 
 class AuthValidationController extends GetxController {
@@ -9,11 +10,6 @@ class AuthValidationController extends GetxController {
       registerEmailController,
       registerPasswordController,
       registerConfirmPasswordController;
-  // var loginEmail = "";
-  // var loginPassword = "";
-  // var registerEmail = "";
-  // var registerPassword = "";
-  // var registerConfirmPassword = "";
 
   @override
   void onInit() {
@@ -67,13 +63,13 @@ class AuthValidationController extends GetxController {
 
   void login() {
     if (loginFormKey.currentState!.validate()) {
-      print("Login successful");
+      Get.offAllNamed(AppLinks.PORTFOLIO);
     }
   }
 
   register() {
     if (registerFormKey.currentState!.validate()) {
-      // Get.to(AuthenticationScreen());
+      Get.offNamed(AppLinks.AUTH);
     }
   }
 }
