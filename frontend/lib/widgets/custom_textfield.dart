@@ -56,7 +56,9 @@ class CustomTextField extends StatelessWidget {
                   : null,
             ),
             obscureText: !passwordTextFieldController!.isPasswordShown.value,
-            validator: authValidationController.validatePassword),
+            validator: authPageController.isLoginPage.value
+                ? authValidationController.validateLoginPassword
+                : authValidationController.validateRegisterPassword),
       );
     } else {
       return TextFormField(

@@ -62,7 +62,7 @@ class PortfolioScreen extends StatelessWidget {
                     color: Theme.of(context).colorScheme.primary,
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.only(left: 8, top: 5),
+                    padding: const EdgeInsets.only(left: 10, top: 5),
                     child: Text("Portfolio",
                         style: Theme.of(context)
                             .textTheme
@@ -75,7 +75,7 @@ class PortfolioScreen extends StatelessWidget {
                   left: 0,
                   right: 0,
                   child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    padding: const EdgeInsets.only(left: 20, right: 20, top: 5),
                     margin: const EdgeInsets.symmetric(horizontal: 20),
                     height: size.height * .2,
                     decoration: BoxDecoration(
@@ -113,13 +113,20 @@ class PortfolioScreen extends StatelessWidget {
                                 value: 1500.toString(), label: "Today's P/L"),
                           ],
                         ),
-                        Align(
-                          alignment: Alignment.centerRight,
-                          child: Text("As of 2022/02/03",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .subtitle2!
-                                  .copyWith(color: Colors.black87)),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text("As of 2022/02/03",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .subtitle2!
+                                    .copyWith(color: Colors.black87)),
+                            InkWell(
+                              onTap: () {},
+                              child: Icon(Icons.refresh_outlined,
+                                  color: Theme.of(context).colorScheme.primary),
+                            ),
+                          ],
                         ),
                       ],
                     ),
@@ -197,18 +204,6 @@ class PortfolioScreen extends StatelessWidget {
                     ],
                   );
                 },
-                //             {
-                //   "stock_name": "JBBL",
-                //   "units": 100,
-                //   "ltp": 450,
-                //   "current_value": 45000,
-                //   "investment": 40000,
-                //   "overall_profit": 5000,
-                //   "gain_percent": 30.5,
-                //   "today_profit": 390,
-                //   "targets": [480, 520, 550],
-                //   "stop_loss": 420,
-                // }
               ),
             ),
           ],

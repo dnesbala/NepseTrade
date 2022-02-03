@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'NepseTrade',
       theme: AppTheme.theme(),
-      initialRoute: "/portfolio",
+      initialRoute: "/",
       getPages: AppRoutes.pages,
     );
   }

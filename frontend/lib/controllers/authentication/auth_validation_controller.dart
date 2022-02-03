@@ -39,21 +39,22 @@ class AuthValidationController extends GetxController {
     }
   }
 
-  String? validatePassword(String? password) {
+  String? validateLoginPassword(String? password) {
     if (password!.isEmpty) {
       return "Password cannot be empty";
     } else if (password.length < 8) {
       return "Password should be atleast 8 characters long";
-    } else if (registerPasswordController.text !=
-        registerConfirmPasswordController.text) {
-      return "Both the passwords should match";
     } else {
       return null;
     }
   }
 
-  String? validateConfirmPassword(String? registerConfirmPassword) {
-    if (registerPasswordController.text !=
+  String? validateRegisterPassword(String? registerPassword) {
+    if (registerPassword!.isEmpty) {
+      return "Password cannot be empty";
+    } else if (registerPassword.length < 8) {
+      return "Password should be atleast 8 characters long";
+    } else if (registerPasswordController.text !=
         registerConfirmPasswordController.text) {
       return "Both the passwords should match";
     } else {
