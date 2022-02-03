@@ -48,6 +48,9 @@ class AppTheme {
           fontStyle: FontStyle.italic,
         ),
       ),
+      inputDecorationTheme: InputDecorationTheme(
+        errorStyle: TextStyle(fontSize: 14),
+      ),
     );
   }
 }
