@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:frontend/config/app_routes.dart';
 import 'package:frontend/config/app_theme.dart';
-import 'package:frontend/views/authentication/authentication_screen.dart';
 import 'package:get/get.dart';
 
 void main() {
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    statusBarColor: AppTheme.theme().colorScheme.primary,
+  ));
   runApp(const MyApp());
 }
 
@@ -17,7 +20,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'NepseTrade',
       theme: AppTheme.theme(),
-      home: AuthenticationScreen(),
+      initialRoute: "/portfolio",
       getPages: AppRoutes.pages,
     );
   }

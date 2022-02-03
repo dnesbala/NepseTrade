@@ -47,6 +47,8 @@ class AppTheme {
           fontSize: 16,
           fontStyle: FontStyle.italic,
         ),
+        subtitle1: TextStyle(fontSize: 14),
+        subtitle2: TextStyle(fontSize: 12),
       ),
       inputDecorationTheme: InputDecorationTheme(
         errorStyle: TextStyle(fontSize: 14),
