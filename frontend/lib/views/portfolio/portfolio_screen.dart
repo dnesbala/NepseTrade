@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/config/app_links.dart';
 import 'package:frontend/widgets/label_text.dart';
+import 'package:get/get.dart';
 
 class PortfolioScreen extends StatelessWidget {
   PortfolioScreen({Key? key}) : super(key: key);
@@ -152,10 +154,11 @@ class PortfolioScreen extends StatelessWidget {
                   return ExpansionTile(
                     title: Text(item["stock_name"],
                         style: Theme.of(context).textTheme.headline6),
-                    subtitle: Text("${item["units"]} units"),
+                    subtitle: Text("${item["units"]} units",
+                        style: Theme.of(context).textTheme.subtitle1),
                     children: [
                       InkWell(
-                        onTap: () {},
+                        onTap: () => Get.toNamed(AppLinks.TRANSACTION),
                         child: Ink(
                           padding: const EdgeInsets.only(left: 20, top: 20),
                           color: Colors.grey.shade100,

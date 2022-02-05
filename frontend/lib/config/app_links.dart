@@ -5,5 +5,5 @@ class AppLinks {
   static const PORTFOLIO = "/portfolio";
   static const WATCHLIST = "/watchlist";
   static const TRANSACTION = "/transaction";
-  static const PROFILE = "/profile";
+  static const MORE = "/more";
 }

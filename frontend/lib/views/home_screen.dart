@@ -48,20 +48,22 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: pages[pageIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: pageIndex,
-        onTap: (int index) {
-          setState(() {
-            pageIndex = index;
-          });
-        },
-        items: bottomNavigationBarItems,
-        backgroundColor: Colors.white,
-        type: BottomNavigationBarType.fixed,
-        iconSize: 20,
-        selectedFontSize: 12,
+    return SafeArea(
+      child: Scaffold(
+        body: pages[pageIndex],
+        bottomNavigationBar: BottomNavigationBar(
+          currentIndex: pageIndex,
+          onTap: (int index) {
+            setState(() {
+              pageIndex = index;
+            });
+          },
+          items: bottomNavigationBarItems,
+          backgroundColor: Colors.white,
+          type: BottomNavigationBarType.fixed,
+          iconSize: 20,
+          selectedFontSize: 12,
+        ),
       ),
     );
   }
