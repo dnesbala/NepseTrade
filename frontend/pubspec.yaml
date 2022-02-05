@@ -37,6 +37,7 @@ dependencies:
   google_fonts: ^2.2.0
   font_awesome_flutter: ^9.2.0
   get: ^4.6.1
+  slide_to_act: ^2.0.1
 
 dev_dependencies:
   flutter_test:

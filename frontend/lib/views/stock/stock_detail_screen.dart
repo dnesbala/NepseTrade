@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/widgets/buy_stock_modal.dart';
+import 'package:frontend/widgets/sell_stock_modal.dart';
 
 class StockDetailScreen extends StatelessWidget {
   const StockDetailScreen({Key? key}) : super(key: key);
@@ -38,7 +40,7 @@ class StockDetailScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () => buyStockModal(context),
                       child: Text("Buy"),
                       style: ElevatedButton.styleFrom(
                         elevation: 0,
@@ -47,9 +49,9 @@ class StockDetailScreen extends StatelessWidget {
                             horizontal: 50, vertical: 15),
                       ),
                     ),
-                    SizedBox(height: 8),
+                    SizedBox(height: 10),
                     ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () => sellStockModal(context),
                       child: Text("Sell"),
                       style: ElevatedButton.styleFrom(
                           elevation: 0,
