@@ -64,7 +64,7 @@ class AuthValidationController extends GetxController {
 
   void login() {
     if (loginFormKey.currentState!.validate()) {
-      Get.offAllNamed(AppLinks.PORTFOLIO);
+      Get.offAllNamed(AppLinks.HOME);
     }
   }
 

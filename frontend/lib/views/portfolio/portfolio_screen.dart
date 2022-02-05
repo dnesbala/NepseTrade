@@ -138,15 +138,20 @@ class PortfolioScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
               child: Text("Holdings",
-                  style: Theme.of(context).textTheme.headline6),
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline5!
+                      .copyWith(color: Theme.of(context).colorScheme.primary)),
             ),
+            Divider(height: 0),
             Expanded(
               child: ListView.builder(
                 itemCount: portfolioData.length,
                 itemBuilder: (BuildContext context, int index) {
                   var item = portfolioData[index];
                   return ExpansionTile(
-                    title: Text(item["stock_name"]),
+                    title: Text(item["stock_name"],
+                        style: Theme.of(context).textTheme.headline6),
                     subtitle: Text("${item["units"]} units"),
                     children: [
                       InkWell(

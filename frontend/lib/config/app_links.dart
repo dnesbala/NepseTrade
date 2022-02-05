@@ -1,5 +1,6 @@
 class AppLinks {
-  static const HOME = "/";
+  static const FIRST = "/";
+  static const HOME = "/home";
   static const AUTH = "/auth";
   static const PORTFOLIO = "/portfolio";
   static const WATCHLIST = "/watchlist";
