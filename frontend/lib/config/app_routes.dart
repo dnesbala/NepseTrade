@@ -4,6 +4,7 @@ import 'package:frontend/views/authentication/authentication_screen.dart';
 import 'package:frontend/views/home_screen.dart';
 import 'package:frontend/views/more/more_screen.dart';
 import 'package:frontend/views/portfolio/portfolio_screen.dart';
+import 'package:frontend/views/stock_detail_screen.dart';
 import 'package:frontend/views/transaction/transaction_screen.dart';
 import 'package:frontend/views/watchlist/watchlist_screen.dart';
 import 'package:get/get.dart';
@@ -20,5 +21,6 @@ class AppRoutes {
     GetPage(name: AppLinks.WATCHLIST, page: () => WatchlistScreen()),
     GetPage(name: AppLinks.TRANSACTION, page: () => TransactionScreen()),
     GetPage(name: AppLinks.MORE, page: () => MoreScreen()),
+    GetPage(name: AppLinks.STOCKDETAIL, page: () => StockDetailScreen()),
   ];
 }

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/config/app_links.dart';
+import 'package:get/get.dart';
 
 class WatchListTile extends StatelessWidget {
   final String symbol;
@@ -21,10 +23,12 @@ class WatchListTile extends StatelessWidget {
     return Column(
       children: [
         ListTile(
+          onTap: () => Get.toNamed(AppLinks.STOCKDETAIL),
           title: Text(symbol),
           subtitle: Text(name, style: Theme.of(context).textTheme.subtitle2),
           trailing: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
             textBaseline: TextBaseline.alphabetic,
             children: [
               Text("Rs.$ltp", style: Theme.of(context).textTheme.subtitle1),

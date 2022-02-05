@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:frontend/config/app_links.dart';
+import 'package:get/get.dart';
 
 class TransactionTile extends StatelessWidget {
   final String name;
@@ -22,6 +24,7 @@ class TransactionTile extends StatelessWidget {
     return Column(
       children: [
         ListTile(
+          onTap: () => Get.toNamed(AppLinks.STOCKDETAIL),
           title: Text(name),
           subtitle: Text(date, style: Theme.of(context).textTheme.subtitle2),
           trailing: SizedBox(

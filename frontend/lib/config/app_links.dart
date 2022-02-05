@@ -6,4 +6,5 @@ class AppLinks {
   static const WATCHLIST = "/watchlist";
   static const TRANSACTION = "/transaction";
   static const MORE = "/more";
+  static const STOCKDETAIL = "/stock-detail";
 }
