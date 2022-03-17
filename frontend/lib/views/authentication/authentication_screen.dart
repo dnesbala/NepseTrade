@@ -5,7 +5,7 @@ import 'package:frontend/views/authentication/register_screen.dart';
 import 'package:get/get.dart';
 
 class AuthenticationScreen extends StatelessWidget {
-  final authPageController = Get.put(AuthPageController());
+  final authPageController = Get.find<AuthPageController>();
 
   AuthenticationScreen({Key? key}) : super(key: key);
 

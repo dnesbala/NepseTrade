@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:frontend/config/app_links.dart';
 import 'package:frontend/config/app_routes.dart';
 import 'package:frontend/config/app_theme.dart';
 import 'package:get/get.dart';
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'NepseTrade',
       theme: AppTheme.theme(),
-      initialRoute: "/home",
+      initialRoute: AppLinks.AUTH,
       getPages: AppRoutes.pages,
     );
   }

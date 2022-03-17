@@ -3,15 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:frontend/controllers/authentication/auth_page_controller.dart';
 import 'package:frontend/controllers/authentication/auth_validation_controller.dart';
-import 'package:frontend/controllers/password_textfield_controller.dart';
 import 'package:frontend/widgets/custom_textfield.dart';
 import 'package:get/get.dart';
 
 class LoginScreen extends StatelessWidget {
-  final authPageController = Get.put(AuthPageController());
-
-  final passwordTextFieldController = Get.put(PasswordTextFieldController());
-  final authValidationController = Get.put(AuthValidationController());
+  final authPageController = Get.find<AuthPageController>();
+  final authValidationController = Get.find<AuthValidationController>();
 
   LoginScreen({Key? key}) : super(key: key);
 
@@ -39,7 +36,6 @@ class LoginScreen extends StatelessWidget {
               isPassword: true,
               textEditingController:
                   authValidationController.loginPasswordController,
-              passwordTextFieldController: passwordTextFieldController,
             ),
             SizedBox(height: 15),
             Center(

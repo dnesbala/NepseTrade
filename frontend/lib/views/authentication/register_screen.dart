@@ -3,17 +3,12 @@ import 'package:flutter/gestures.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:frontend/controllers/authentication/auth_page_controller.dart';
 import 'package:frontend/controllers/authentication/auth_validation_controller.dart';
-import 'package:frontend/controllers/password_textfield_controller.dart';
 import 'package:frontend/widgets/custom_textfield.dart';
 import 'package:get/get.dart';
 
 class RegisterScreen extends StatelessWidget {
-  final authPageController = Get.put(AuthPageController());
-  final authValidationController = Get.put(AuthValidationController());
-  final passwordTextFieldController1 =
-      Get.put(PasswordTextFieldController(), tag: "instance1");
-  final passwordTextFieldController2 =
-      Get.put(PasswordTextFieldController(), tag: "instance2");
+  final authPageController = Get.find<AuthPageController>();
+  final authValidationController = Get.find<AuthValidationController>();
 
   RegisterScreen({Key? key}) : super(key: key);
 
@@ -38,18 +33,18 @@ class RegisterScreen extends StatelessWidget {
             Text("Password"),
             SizedBox(height: 5),
             CustomTextField(
-                isPassword: true,
-                textEditingController:
-                    authValidationController.registerPasswordController,
-                passwordTextFieldController: passwordTextFieldController1),
+              isPassword: true,
+              textEditingController:
+                  authValidationController.registerPasswordController,
+            ),
             SizedBox(height: 15),
             Text("Confirm Password"),
             SizedBox(height: 5),
             CustomTextField(
-                isPassword: true,
-                textEditingController:
-                    authValidationController.registerConfirmPasswordController,
-                passwordTextFieldController: passwordTextFieldController2),
+              isPassword: true,
+              textEditingController:
+                  authValidationController.registerConfirmPasswordController,
+            ),
             SizedBox(height: 15),
             Center(
               child: ElevatedButton(

@@ -20,7 +20,7 @@ class WatchlistScreen extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 10),
         child: Column(
           children: [
-            InkWell(
+            GestureDetector(
               onTap: () {},
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 15),

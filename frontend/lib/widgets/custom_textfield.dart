@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/controllers/authentication/auth_page_controller.dart';
 import 'package:frontend/controllers/authentication/auth_validation_controller.dart';
-import 'package:frontend/controllers/password_textfield_controller.dart';
 import 'package:get/get.dart';
 
 class CustomTextField extends StatelessWidget {
@@ -9,18 +8,15 @@ class CustomTextField extends StatelessWidget {
       Get.put<AuthValidationController>(AuthValidationController());
   final authPageController = Get.put<AuthPageController>(AuthPageController());
 
-  final String tag;
   final bool isPassword;
   final TextEditingController textEditingController;
-  final PasswordTextFieldController? passwordTextFieldController;
+  var isPasswordShown = false.obs;
 
-  CustomTextField(
-      {Key? key,
-      this.tag = "",
-      this.isPassword = false,
-      required this.textEditingController,
-      this.passwordTextFieldController})
-      : super(key: key);
+  CustomTextField({
+    Key? key,
+    this.isPassword = false,
+    required this.textEditingController,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -47,15 +43,15 @@ class CustomTextField extends StatelessWidget {
               suffixIcon: isPassword
                   ? IconButton(
                       onPressed: () {
-                        passwordTextFieldController?.toggle();
+                        togglePasswordVisibility();
                       },
-                      icon: passwordTextFieldController!.isPasswordShown.value
+                      icon: isPasswordShown.value
                           ? Icon(Icons.visibility_off)
                           : Icon(Icons.visibility),
                     )
                   : null,
             ),
-            obscureText: !passwordTextFieldController!.isPasswordShown.value,
+            obscureText: isPasswordShown.value,
             validator: authPageController.isLoginPage.value
                 ? authValidationController.validateLoginPassword
                 : authValidationController.validateRegisterPassword),
@@ -82,5 +78,9 @@ class CustomTextField extends StatelessWidget {
         validator: authValidationController.validateEmail,
       );
     }
+  }
+
+  void togglePasswordVisibility() {
+    isPasswordShown.value = !isPasswordShown.value;
   }
 }
