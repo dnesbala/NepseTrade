@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "882166498821",
+    "project_id": "nepse-trade",
+    "storage_bucket": "nepse-trade.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:882166498821:android:b0e61c910918f282d2be6c",
+        "android_client_info": {
+          "package_name": "com.nepsetrade"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "882166498821-2305ibpqu3acd65v0r801lvccmidgf20.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB7jexxgZPn3Q7iMhd-n_OQqVLoEGCEN3Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "882166498821-2305ibpqu3acd65v0r801lvccmidgf20.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
