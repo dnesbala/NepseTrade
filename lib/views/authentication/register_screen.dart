@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:frontend/controllers/authentication/auth_controller.dart';
 import 'package:frontend/controllers/authentication/auth_page_controller.dart';
 import 'package:frontend/widgets/custom_textfield.dart';
 import 'package:get/get.dart';
@@ -51,7 +52,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             CustomTextField(
               isPassword: true,
               textEditingController: _passwordController,
-              confirmPassword: _confirmPasswordController.text,
+              confirmPasswordController: _confirmPasswordController,
             ),
             SizedBox(height: 15),
             Text("Confirm Password"),
@@ -59,14 +60,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
             CustomTextField(
               isPassword: true,
               textEditingController: _confirmPasswordController,
-              confirmPassword: _confirmPasswordController.text,
+              confirmPasswordController: _passwordController,
             ),
             SizedBox(height: 15),
             Center(
               child: ElevatedButton(
                 onPressed: () {
                   if (_registerKey.currentState!.validate()) {
-                    // REGISTER
+                    AuthController.instance.registerWithEmailPassword(
+                        _emailController.text, _passwordController.text);
                   }
                 },
                 child: Text("Register"),

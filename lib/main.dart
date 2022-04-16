@@ -4,6 +4,8 @@ import 'package:flutter/services.dart';
 import 'package:frontend/config/app_links.dart';
 import 'package:frontend/config/app_routes.dart';
 import 'package:frontend/config/app_theme.dart';
+import 'package:frontend/controllers/authentication/auth_controller.dart';
+import 'package:frontend/initial_bindings.dart';
 import 'package:get/get.dart';
 
 void main() async {
@@ -19,7 +21,8 @@ void main() async {
       storageBucket: "nepse-trade.appspot.com",
       measurementId: "G-Q923NBEKMF",
     ),
-  );
+  ).then((value) => Get.put(AuthController()));
+
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
     statusBarColor: AppTheme.theme().colorScheme.primary,
   ));
@@ -35,7 +38,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'NepseTrade',
       theme: AppTheme.theme(),
-      initialRoute: AppLinks.AUTH,
+      initialBinding: InitialBindings(),
       getPages: AppRoutes.pages,
     );
   }

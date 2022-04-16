@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:frontend/controllers/authentication/auth_controller.dart';
 import 'package:frontend/controllers/authentication/auth_page_controller.dart';
 import 'package:frontend/widgets/custom_textfield.dart';
 import 'package:get/get.dart';
@@ -55,7 +56,8 @@ class _LoginScreenState extends State<LoginScreen> {
               child: ElevatedButton(
                 onPressed: () {
                   if (_loginFormKey.currentState!.validate()) {
-                    // LOGIN
+                    AuthController.instance.loginWithEmailPassword(
+                        _emailController.text, _passwordController.text);
                   }
                 },
                 child: Text("Login"),

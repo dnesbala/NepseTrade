@@ -8,13 +8,13 @@ class CustomTextField extends StatelessWidget {
 
   final bool isPassword;
   final TextEditingController textEditingController;
-  final String? confirmPassword;
+  final TextEditingController? confirmPasswordController;
   var isPasswordShown = false.obs;
 
   CustomTextField({
     Key? key,
     this.isPassword = false,
-    this.confirmPassword,
+    this.confirmPasswordController,
     required this.textEditingController,
   }) : super(key: key);
 
@@ -100,7 +100,7 @@ class CustomTextField extends StatelessWidget {
       return "Password cannot be empty";
     } else if (password.length < 8) {
       return "Password should be atleast 8 characters long";
-    } else if (password != confirmPassword) {
+    } else if (password != confirmPasswordController!.text) {
       return "Both the passwords should match";
     } else {
       return null;
