@@ -2,15 +2,31 @@ import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:frontend/controllers/authentication/auth_page_controller.dart';
-import 'package:frontend/controllers/authentication/auth_validation_controller.dart';
 import 'package:frontend/widgets/custom_textfield.dart';
 import 'package:get/get.dart';
 
-class RegisterScreen extends StatelessWidget {
-  final authPageController = Get.find<AuthPageController>();
-  final authValidationController = Get.find<AuthValidationController>();
+class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({Key? key}) : super(key: key);
 
-  RegisterScreen({Key? key}) : super(key: key);
+  @override
+  State<RegisterScreen> createState() => _RegisterScreenState();
+}
+
+class _RegisterScreenState extends State<RegisterScreen> {
+  final authPageController = Get.find<AuthPageController>();
+
+  final _registerKey = GlobalKey<FormState>();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  final _confirmPasswordController = TextEditingController();
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    _confirmPasswordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +35,7 @@ class RegisterScreen extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
       child: Form(
-        key: authValidationController.registerFormKey,
+        key: _registerKey,
         autovalidateMode: AutovalidateMode.onUserInteraction,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -27,28 +43,32 @@ class RegisterScreen extends StatelessWidget {
             Text("Email"),
             SizedBox(height: 5),
             CustomTextField(
-                textEditingController:
-                    authValidationController.registerEmailController),
+              textEditingController: _emailController,
+            ),
             SizedBox(height: 15),
             Text("Password"),
             SizedBox(height: 5),
             CustomTextField(
               isPassword: true,
-              textEditingController:
-                  authValidationController.registerPasswordController,
+              textEditingController: _passwordController,
+              confirmPassword: _confirmPasswordController.text,
             ),
             SizedBox(height: 15),
             Text("Confirm Password"),
             SizedBox(height: 5),
             CustomTextField(
               isPassword: true,
-              textEditingController:
-                  authValidationController.registerConfirmPasswordController,
+              textEditingController: _confirmPasswordController,
+              confirmPassword: _confirmPasswordController.text,
             ),
             SizedBox(height: 15),
             Center(
               child: ElevatedButton(
-                onPressed: authValidationController.register,
+                onPressed: () {
+                  if (_registerKey.currentState!.validate()) {
+                    // REGISTER
+                  }
+                },
                 child: Text("Register"),
                 style: ElevatedButton.styleFrom(
                   minimumSize: Size(size.width, 40),

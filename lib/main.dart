@@ -9,6 +9,7 @@ import 'package:get/get.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
+    name: "nepse-trade",
     options: FirebaseOptions(
       apiKey: "AIzaSyCLdtb38lLI3Ezeck3By4UCnBZ-85Nm-Aw",
       projectId: "nepse-trade",

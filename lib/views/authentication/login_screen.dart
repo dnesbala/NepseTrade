@@ -2,15 +2,29 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:frontend/controllers/authentication/auth_page_controller.dart';
-import 'package:frontend/controllers/authentication/auth_validation_controller.dart';
 import 'package:frontend/widgets/custom_textfield.dart';
 import 'package:get/get.dart';
 
-class LoginScreen extends StatelessWidget {
-  final authPageController = Get.find<AuthPageController>();
-  final authValidationController = Get.find<AuthValidationController>();
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({Key? key}) : super(key: key);
 
-  LoginScreen({Key? key}) : super(key: key);
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  final _loginFormKey = GlobalKey<FormState>();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+
+  final authPageController = Get.find<AuthPageController>();
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +33,7 @@ class LoginScreen extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
       child: Form(
-        key: authValidationController.loginFormKey,
+        key: _loginFormKey,
         autovalidateMode: AutovalidateMode.onUserInteraction,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -27,20 +41,23 @@ class LoginScreen extends StatelessWidget {
             Text("Email"),
             SizedBox(height: 5),
             CustomTextField(
-                textEditingController:
-                    authValidationController.loginEmailController),
+              textEditingController: _emailController,
+            ),
             SizedBox(height: 15),
             Text("Password"),
             SizedBox(height: 5),
             CustomTextField(
               isPassword: true,
-              textEditingController:
-                  authValidationController.loginPasswordController,
+              textEditingController: _passwordController,
             ),
             SizedBox(height: 15),
             Center(
               child: ElevatedButton(
-                onPressed: authValidationController.login,
+                onPressed: () {
+                  if (_loginFormKey.currentState!.validate()) {
+                    // LOGIN
+                  }
+                },
                 child: Text("Login"),
                 style: ElevatedButton.styleFrom(
                   minimumSize: Size(size.width, 40),
