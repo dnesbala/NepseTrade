@@ -1,21 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/config/app_links.dart';
+import 'package:frontend/models/watchlist_model.dart';
 import 'package:get/get.dart';
 
 class WatchListTile extends StatelessWidget {
-  final String symbol;
-  final String name;
-  final double ltp;
-  final double change;
-  final double changePercent;
+  final int index;
+  final Watchlist watchlist;
 
   const WatchListTile({
     Key? key,
-    required this.symbol,
-    required this.name,
-    required this.ltp,
-    required this.change,
-    required this.changePercent,
+    required this.index,
+    required this.watchlist,
   }) : super(key: key);
 
   @override
@@ -23,21 +18,24 @@ class WatchListTile extends StatelessWidget {
     return Column(
       children: [
         ListTile(
-          onTap: () => Get.toNamed(AppLinks.STOCKDETAIL),
-          title: Text(symbol),
-          subtitle: Text(name, style: Theme.of(context).textTheme.subtitle2),
-          trailing: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
-            textBaseline: TextBaseline.alphabetic,
+          onTap: () => Get.toNamed(AppLinks.STOCKDETAIL, arguments: watchlist),
+          title: Text(watchlist.companyName,
+              style: Theme.of(context).textTheme.bodyMedium),
+          subtitle: Row(
             children: [
-              Text("Rs.$ltp", style: Theme.of(context).textTheme.subtitle1),
-              Text("+$change ($changePercent)",
-                  style: Theme.of(context)
-                      .textTheme
-                      .subtitle1!
-                      .copyWith(color: Colors.green)),
+              Text("Rs.${watchlist.closingPrice}",
+                  style: Theme.of(context).textTheme.subtitle1),
+              Text(" (${watchlist.difference})",
+                  style: Theme.of(context).textTheme.subtitle1!.copyWith(
+                        color: watchlist.difference.isNegative
+                            ? Colors.red
+                            : Colors.green,
+                      )),
             ],
+          ),
+          trailing: IconButton(
+            onPressed: () {},
+            icon: Icon(Icons.keyboard_arrow_right),
           ),
           leading: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -45,7 +43,7 @@ class WatchListTile extends StatelessWidget {
               CircleAvatar(
                 child: Center(
                   child: Text(
-                    1.toString(),
+                    "${index + 1}",
                   ),
                 ),
                 backgroundColor: Theme.of(context).colorScheme.primary,

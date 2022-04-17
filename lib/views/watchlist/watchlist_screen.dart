@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/controllers/watchlist_controller.dart';
 import 'package:frontend/views/watchlist/widgets/watchlist_tile.dart';
 import 'package:frontend/widgets/search_stock_delegate.dart';
+import 'package:get/get.dart';
 
 class WatchlistScreen extends StatelessWidget {
-  const WatchlistScreen({Key? key}) : super(key: key);
+  WatchlistScreen({Key? key}) : super(key: key);
+
+  final WatchlistController watchlistController =
+      Get.find<WatchlistController>();
 
   @override
   Widget build(BuildContext context) {
@@ -46,24 +51,26 @@ class WatchlistScreen extends StatelessWidget {
                 ),
               ),
             ),
-            WatchListTile(
-                symbol: "MEGA",
-                name: "Mega Bank Limited",
-                ltp: 297,
-                change: 3.5,
-                changePercent: 1.2),
-            WatchListTile(
-                symbol: "MEGA",
-                name: "Mega Bank Limited",
-                ltp: 297,
-                change: 3.5,
-                changePercent: 1.2),
-            WatchListTile(
-                symbol: "MEGA",
-                name: "Mega Bank Limited",
-                ltp: 297,
-                change: 3.5,
-                changePercent: 1.2),
+            Obx(
+              () => Expanded(
+                child: ListView.builder(
+                    itemCount: watchlistController.watchlists.length,
+                    itemBuilder: (context, index) {
+                      if (watchlistController.watchlists.isEmpty) {
+                        return Center(
+                          child: Text("No Watchlist found."),
+                        );
+                      }
+
+                      final watchlist = watchlistController.watchlists[index];
+
+                      return WatchListTile(
+                        index: index,
+                        watchlist: watchlist,
+                      );
+                    }),
+              ),
+            ),
           ],
         ),
       ),

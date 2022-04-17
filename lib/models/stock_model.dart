@@ -1,13 +1,13 @@
 import 'dart:convert';
 
-List<TodaysPrice> todaysPriceFromJson(String str) => List<TodaysPrice>.from(
-    json.decode(str).map((x) => TodaysPrice.fromJson(x)));
+List<Stock> todaysPriceFromJson(String str) =>
+    List<Stock>.from(json.decode(str).map((x) => Stock.fromJson(x)));
 
-String todaysPriceToJson(List<TodaysPrice> data) =>
+String todaysPriceToJson(List<Stock> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
-class TodaysPrice {
-  TodaysPrice({
+class Stock {
+  Stock({
     required this.companyName,
     required this.noOfTransactions,
     required this.maxPrice,
@@ -29,7 +29,7 @@ class TodaysPrice {
   double previousClosing;
   double difference;
 
-  factory TodaysPrice.fromJson(Map<String, dynamic> json) => TodaysPrice(
+  factory Stock.fromJson(Map<String, dynamic> json) => Stock(
         companyName: json["companyName"],
         noOfTransactions: json["noOfTransactions"],
         maxPrice: json["maxPrice"].toDouble(),

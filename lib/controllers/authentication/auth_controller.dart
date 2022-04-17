@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:frontend/config/app_links.dart';
 import 'package:frontend/config/constants.dart';
+import 'package:frontend/models/user_model.dart' as model;
 import 'package:frontend/utils/helpers.dart';
 import 'package:get/get.dart';
 
@@ -40,8 +41,17 @@ class AuthController extends GetxController {
 
   void registerWithEmailPassword(String email, String password) async {
     try {
-      await firebaseAuth.createUserWithEmailAndPassword(
-          email: email, password: password);
+      UserCredential credential = await firebaseAuth
+          .createUserWithEmailAndPassword(email: email, password: password);
+      model.User user = model.User(
+        email: email,
+        balance: 100000,
+        userId: credential.user!.uid,
+      );
+      await fireStore
+          .collection("users")
+          .doc(credential.user!.uid)
+          .set(user.toJson());
     } on FirebaseAuthException catch (e) {
       showErrorSnackbar(
         title: "Error creating account",

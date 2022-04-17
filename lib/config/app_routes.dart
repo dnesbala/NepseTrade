@@ -23,6 +23,8 @@ class AppRoutes {
     GetPage(name: AppLinks.WATCHLIST, page: () => WatchlistScreen()),
     GetPage(name: AppLinks.TRANSACTION, page: () => TransactionScreen()),
     GetPage(name: AppLinks.MORE, page: () => MoreScreen()),
-    GetPage(name: AppLinks.STOCKDETAIL, page: () => StockDetailScreen()),
+    GetPage(
+        name: AppLinks.STOCKDETAIL,
+        page: () => StockDetailScreen(watchlist: Get.arguments)),
   ];
 }

@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/controllers/stock/stock_controller.dart';
+import 'package:frontend/controllers/watchlist_controller.dart';
 import 'package:get/get.dart';
 
 class SearchStockDelegate extends SearchDelegate {
   final StockController stockController = Get.find<StockController>();
+  final WatchlistController watchlistController =
+      Get.find<WatchlistController>();
 
   @override
   List<Widget>? buildActions(BuildContext context) {
@@ -29,8 +32,6 @@ class SearchStockDelegate extends SearchDelegate {
             element.companyName.toLowerCase().contains(query.toLowerCase()))
         .toList();
 
-    print("filtered $filteredStocks");
-
     return filteredStocks.isEmpty
         ? Center(
             child: Text("No stocks found"),
@@ -38,12 +39,14 @@ class SearchStockDelegate extends SearchDelegate {
         : ListView.separated(
             separatorBuilder: (_, index) => Divider(height: 0),
             itemCount: filteredStocks.length,
-            // itemCount: stockController.stocks!.length,
             itemBuilder: ((context, index) {
               var stock = filteredStocks[index];
 
               return ListTile(
-                onTap: () {},
+                onTap: () {
+                  watchlistController.addToWatchlist(stock);
+                  Get.back();
+                },
                 title: Text(stock.companyName,
                     style: Theme.of(context).textTheme.bodyText2),
                 subtitle: RichText(
