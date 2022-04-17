@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/controllers/stock/buy_stock_controller.dart';
+import 'package:frontend/models/watchlist_model.dart';
 import 'package:get/get.dart';
 import 'package:slide_to_act/slide_to_act.dart';
 
-buyStockModal(BuildContext context) {
+buyStockModal(BuildContext context, Watchlist watchlist, double userBalance) {
   final buyStockController = Get.put<BuyStockController>(BuyStockController(),
       tag: UniqueKey().toString());
 
@@ -11,6 +12,7 @@ buyStockModal(BuildContext context) {
       isScrollControlled: true,
       context: context,
       builder: (context) {
+        var maxBuyUnits = (userBalance / watchlist.closingPrice).floor();
         return SingleChildScrollView(
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -23,12 +25,12 @@ buyStockModal(BuildContext context) {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Buy MEGA",
+                    Text("Buy ${watchlist.companyName}",
                         style: Theme.of(context)
                             .textTheme
                             .bodyText1!
                             .copyWith(color: Colors.white)),
-                    Text("Max Buy Units: 2400",
+                    Text("Max Buy Units: $maxBuyUnits",
                         style: Theme.of(context)
                             .textTheme
                             .subtitle1!
@@ -89,9 +91,9 @@ buyStockModal(BuildContext context) {
                             Spacer(),
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
-                              children: const [
+                              children: [
                                 Text("Price"),
-                                Text("Rs.297"),
+                                Text("Rs.${watchlist.closingPrice}"),
                               ],
                             ),
                           ],
@@ -178,7 +180,7 @@ buyStockModal(BuildContext context) {
                         style: TextStyle(color: Colors.white)),
                     onSubmit: buyStockController.isUnitsTextFieldValid.value &&
                             buyStockController.isStopLossFieldValid.value
-                        ? buyStockController.buyStock
+                        ? () => buyStockController.buyStock(watchlist)
                         : null,
                   ),
                 ),

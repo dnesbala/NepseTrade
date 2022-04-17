@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/controllers/stock/sell_stock_controller.dart';
+import 'package:frontend/models/watchlist_model.dart';
 import 'package:get/get.dart';
 import 'package:slide_to_act/slide_to_act.dart';
 
-sellStockModal(BuildContext context) {
+sellStockModal(BuildContext context, Watchlist watchlist) {
   final sellStockController = Get.put<SellStockController>(
       SellStockController(),
       tag: UniqueKey().toString());
@@ -108,7 +109,7 @@ sellStockModal(BuildContext context) {
                 child: Text("Slide to Sell",
                     style: TextStyle(color: Colors.white)),
                 onSubmit: sellStockController.isUnitsFieldValid.value
-                    ? sellStockController.sellStock
+                    ? () => sellStockController.sellStock(watchlist)
                     : null,
               ),
             ),

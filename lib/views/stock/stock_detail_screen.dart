@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:frontend/config/constants.dart';
 import 'package:frontend/models/watchlist_model.dart';
 import 'package:frontend/widgets/buy_stock_modal.dart';
 import 'package:frontend/widgets/sell_stock_modal.dart';
@@ -52,7 +54,16 @@ class StockDetailScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     ElevatedButton(
-                      onPressed: () => buyStockModal(context),
+                      onPressed: () async {
+                        DocumentSnapshot userDoc = await fireStore
+                            .collection("users")
+                            .doc(firebaseAuth.currentUser!.uid)
+                            .get();
+                        var userBalance =
+                            (userDoc.data() as Map<String, dynamic>)["balance"];
+                        buyStockModal(context, watchlist,
+                            double.parse(userBalance.toString()));
+                      },
                       child: Text("Buy"),
                       style: ElevatedButton.styleFrom(
                         elevation: 0,
@@ -63,7 +74,7 @@ class StockDetailScreen extends StatelessWidget {
                     ),
                     SizedBox(height: 10),
                     ElevatedButton(
-                      onPressed: () => sellStockModal(context),
+                      onPressed: () => sellStockModal(context, watchlist),
                       child: Text("Sell"),
                       style: ElevatedButton.styleFrom(
                           elevation: 0,

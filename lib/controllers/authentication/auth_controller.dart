@@ -21,8 +21,6 @@ class AuthController extends GetxController {
     if (user == null) {
       Get.offAllNamed(AppLinks.AUTH);
     } else {
-      print(user);
-      print(_user.value.toString());
       Get.offAllNamed(AppLinks.HOME);
     }
   }

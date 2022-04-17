@@ -8,7 +8,7 @@ class WatchlistScreen extends StatelessWidget {
   WatchlistScreen({Key? key}) : super(key: key);
 
   final WatchlistController watchlistController =
-      Get.find<WatchlistController>();
+      Get.put(WatchlistController());
 
   @override
   Widget build(BuildContext context) {

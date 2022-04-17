@@ -1,4 +1,6 @@
 import 'package:flutter/cupertino.dart';
+import 'package:frontend/controllers/transaction_controller.dart';
+import 'package:frontend/models/watchlist_model.dart';
 import 'package:get/get.dart';
 
 class BuyStockController extends GetxController {
@@ -65,10 +67,14 @@ class BuyStockController extends GetxController {
     }
   }
 
-  buyStock() {
-    print("Stock bought");
-    print(unitsTextEditingController.text);
-    print(stopLossTextEditingController.text);
+  buyStock(Watchlist watchlist) async {
+    TransactionController.instance.addTransaction(
+      stock: watchlist,
+      units: int.parse(unitsTextEditingController.text),
+      price: watchlist.closingPrice,
+      type: "Buy",
+    );
+
     unitsTextEditingController.clear();
     stopLossTextEditingController.clear();
     Get.back();
