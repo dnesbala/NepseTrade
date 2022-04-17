@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/views/watchlist/widgets/watchlist_tile.dart';
+import 'package:frontend/widgets/search_stock_delegate.dart';
 
 class WatchlistScreen extends StatelessWidget {
   const WatchlistScreen({Key? key}) : super(key: key);
@@ -21,7 +22,10 @@ class WatchlistScreen extends StatelessWidget {
         child: Column(
           children: [
             GestureDetector(
-              onTap: () {},
+              onTap: () => showSearch(
+                context: context,
+                delegate: SearchStockDelegate(),
+              ),
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 15),
                 margin: const EdgeInsets.symmetric(vertical: 10),
