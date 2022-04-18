@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/config/constants.dart';
+import 'package:frontend/controllers/transaction_controller.dart';
+import 'package:frontend/models/transaction_model.dart';
 import 'package:frontend/views/transaction/widgets/transaction_tile.dart';
+import 'package:get/get.dart';
 
 class TransactionScreen extends StatelessWidget {
   TransactionScreen({Key? key}) : super(key: key);
+
+  final TransactionController transactionController =
+      Get.find<TransactionController>();
 
   final List<Tab> tabs = [
     Tab(
@@ -45,33 +52,23 @@ class TransactionScreen extends StatelessWidget {
                   indicatorColor: Theme.of(context).colorScheme.primary,
                 ),
               ),
-              TransactionTile(
-                name: "RLI",
-                date: "2022/02/05",
-                type: "Buy",
-                units: 500,
-                price: 610.5,
-              ),
-              TransactionTile(
-                name: "SPDL",
-                date: "2022/02/05",
-                type: "Buy",
-                units: 500,
-                price: 610.5,
-              ),
-              TransactionTile(
-                name: "NABIL",
-                date: "2022/02/05",
-                type: "Sell",
-                units: 200,
-                price: 1100,
-              ),
-              TransactionTile(
-                name: "ICFC",
-                date: "2022/02/06",
-                type: "Buy",
-                units: 50,
-                price: 630,
+              Obx(
+                () => Expanded(
+                  child: ListView.builder(
+                    itemCount: transactionController.transactions.length,
+                    itemBuilder: (context, index) {
+                      final transaction =
+                          transactionController.transactions[index];
+                      return TransactionTile(
+                        name: transaction.stock.companyName,
+                        price: transaction.price,
+                        units: transaction.units,
+                        type: transaction.type,
+                        date: transaction.date,
+                      );
+                    },
+                  ),
+                ),
               ),
             ],
           ),

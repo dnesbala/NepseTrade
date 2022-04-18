@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 
 class TransactionTile extends StatelessWidget {
   final String name;
-  final String date;
+  final DateTime date;
   final String type;
   final int units;
   final double price;
@@ -26,7 +26,8 @@ class TransactionTile extends StatelessWidget {
         ListTile(
           onTap: () => Get.toNamed(AppLinks.STOCKDETAIL),
           title: Text(name),
-          subtitle: Text(date, style: Theme.of(context).textTheme.subtitle2),
+          subtitle: Text("${date.year}/${date.month}/${date.day}",
+              style: Theme.of(context).textTheme.subtitle2),
           trailing: SizedBox(
             width: 100,
             child: Column(

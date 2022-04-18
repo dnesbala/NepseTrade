@@ -52,24 +52,23 @@ class WatchlistScreen extends StatelessWidget {
               ),
             ),
             Obx(
-              () => Expanded(
-                child: ListView.builder(
-                    itemCount: watchlistController.watchlists.length,
-                    itemBuilder: (context, index) {
-                      if (watchlistController.watchlists.isEmpty) {
-                        return Center(
-                          child: Text("No Watchlist found."),
-                        );
-                      }
+              () => watchlistController.watchlists.isEmpty
+                  ? Center(
+                      child: Text("No Watchlist added."),
+                    )
+                  : Expanded(
+                      child: ListView.builder(
+                          itemCount: watchlistController.watchlists.length,
+                          itemBuilder: (context, index) {
+                            final watchlist =
+                                watchlistController.watchlists[index];
 
-                      final watchlist = watchlistController.watchlists[index];
-
-                      return WatchListTile(
-                        index: index,
-                        watchlist: watchlist,
-                      );
-                    }),
-              ),
+                            return WatchListTile(
+                              index: index,
+                              watchlist: watchlist,
+                            );
+                          }),
+                    ),
             ),
           ],
         ),

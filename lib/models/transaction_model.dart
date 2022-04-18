@@ -9,6 +9,7 @@ class Transaction {
   final double price;
   final double totalAmount;
   final String type;
+  final DateTime date;
   final double? stopLoss;
 
   Transaction({
@@ -19,6 +20,7 @@ class Transaction {
     required this.price,
     required this.totalAmount,
     required this.type,
+    required this.date,
     this.stopLoss,
   });
 
@@ -31,6 +33,7 @@ class Transaction {
       'price': price,
       'totalAmount': totalAmount,
       'type': type,
+      'date': date,
       'stopLoss': stopLoss,
     };
   }
@@ -41,11 +44,12 @@ class Transaction {
     return Transaction(
       transactionId: snapshot["transactionId"],
       userId: snapshot["userId"],
-      stock: Watchlist.fromSnap(snapshot["stock"]),
+      stock: Watchlist.fromMap(snapshot["stock"]),
       units: snapshot["units"],
       price: snapshot["price"],
       totalAmount: snapshot["totalAmount"],
       type: snapshot["type"],
+      date: snapshot["date"].toDate(),
       stopLoss: snapshot["stopLoss"] ?? 0,
     );
   }

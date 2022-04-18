@@ -9,6 +9,22 @@ class TransactionController extends GetxController {
   Rx<List<Transaction>> _transactions = Rx<List<Transaction>>([]);
   List<Transaction> get transactions => _transactions.value;
 
+  @override
+  void onInit() {
+    _transactions.bindStream(
+        fireStore.collection("transactions").snapshots().map((query) {
+      List<Transaction> retVal = [];
+      for (var element in query.docs) {
+        var currentUserId = firebaseAuth.currentUser!.uid;
+        if (currentUserId == Transaction.fromSnap(element).userId) {
+          retVal.add(Transaction.fromSnap(element));
+        }
+      }
+      return retVal;
+    }));
+    super.onInit();
+  }
+
   void addTransaction({
     required Watchlist stock,
     required int units,
@@ -28,6 +44,7 @@ class TransactionController extends GetxController {
         units: units,
         price: price,
         totalAmount: units * price,
+        date: DateTime.now(),
         type: type,
       );
 

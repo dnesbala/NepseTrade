@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Watchlist {
@@ -56,6 +58,22 @@ class Watchlist {
       amount: snapshot["amount"],
       previousClosing: snapshot["previousClosing"],
       difference: snapshot["difference"],
+    );
+  }
+
+  factory Watchlist.fromMap(Map<String, dynamic> map) {
+    return Watchlist(
+      watchlistId: map['watchlistId'] ?? '',
+      userId: map['userId'] ?? '',
+      companyName: map['companyName'] ?? '',
+      noOfTransactions: map['noOfTransactions']?.toInt() ?? 0,
+      maxPrice: map['maxPrice']?.toDouble() ?? 0.0,
+      minPrice: map['minPrice']?.toDouble() ?? 0.0,
+      closingPrice: map['closingPrice']?.toDouble() ?? 0.0,
+      tradedShares: map['tradedShares']?.toInt() ?? 0,
+      amount: map['amount']?.toDouble() ?? 0.0,
+      previousClosing: map['previousClosing']?.toDouble() ?? 0.0,
+      difference: map['difference']?.toDouble() ?? 0.0,
     );
   }
 }

@@ -16,7 +16,10 @@ class WatchlistController extends GetxController {
         .map((QuerySnapshot query) {
       List<Watchlist> retVal = [];
       for (var element in query.docs) {
-        retVal.add(Watchlist.fromSnap(element));
+        var currentUserId = firebaseAuth.currentUser!.uid;
+        if (currentUserId == Watchlist.fromSnap(element).userId) {
+          retVal.add(Watchlist.fromSnap(element));
+        }
       }
       return retVal;
     }));
