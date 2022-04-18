@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/config/constants.dart';
 import 'package:frontend/controllers/transaction_controller.dart';
 import 'package:frontend/models/transaction_model.dart';
 import 'package:frontend/views/transaction/widgets/transaction_tile.dart';
@@ -40,40 +39,59 @@ class TransactionScreen extends StatelessWidget {
                   onPressed: () {},
                   icon: Icon(Icons.more_vert_outlined, color: Colors.white)),
             ],
+            bottom: TabBar(
+              tabs: tabs,
+              labelStyle: Theme.of(context).textTheme.bodyText2,
+              labelColor: Colors.white,
+              indicatorColor: Theme.of(context).colorScheme.primary,
+            ),
           ),
-          body: Column(
+          body: TabBarView(
             children: [
-              Material(
-                color: Colors.grey.shade200,
-                child: TabBar(
-                  tabs: tabs,
-                  labelStyle: Theme.of(context).textTheme.bodyText2,
-                  labelColor: Colors.black,
-                  indicatorColor: Theme.of(context).colorScheme.primary,
-                ),
-              ),
+              // ALL TAB
               Obx(
-                () => Expanded(
-                  child: ListView.builder(
-                    itemCount: transactionController.transactions.length,
-                    itemBuilder: (context, index) {
-                      final transaction =
-                          transactionController.transactions[index];
-                      return TransactionTile(
-                        name: transaction.stock.companyName,
-                        price: transaction.price,
-                        units: transaction.units,
-                        type: transaction.type,
-                        date: transaction.date,
-                      );
-                    },
-                  ),
-                ),
+                () => _buildTransactionList(transactionController.transactions),
               ),
+
+              // BUY TAB
+              Obx(() {
+                var allTransactions = transactionController.transactions;
+                var buyTransactions = allTransactions
+                    .where((element) => element.type == "Buy")
+                    .toList();
+
+                return _buildTransactionList(buyTransactions);
+              }),
+
+              // SELL TAB
+              Obx(() {
+                var allTransactions = transactionController.transactions;
+                var sellTransactions = allTransactions
+                    .where((element) => element.type == "Sell")
+                    .toList();
+
+                return _buildTransactionList(sellTransactions);
+              }),
             ],
           ),
         ),
       ),
+    );
+  }
+
+  _buildTransactionList(List<Transaction> transactions) {
+    return ListView.builder(
+      itemCount: transactions.length,
+      itemBuilder: (context, index) {
+        final transaction = transactions[index];
+        return TransactionTile(
+          name: transaction.stock.companyName,
+          price: transaction.price,
+          units: transaction.units,
+          type: transaction.type,
+          date: transaction.date,
+        );
+      },
     );
   }
 }
