@@ -35,14 +35,14 @@ class StockDetailScreen extends StatelessWidget {
             children: [
               _buildRow(
                   "No. of Transactions", watchlist.noOfTransactions.toString()),
-              _buildRow("Volume", watchlist.tradedShares.toString()),
-              _buildRow("Turnover", watchlist.amount.toString()),
-              _buildRow("Max Price", watchlist.maxPrice.toString()),
-              _buildRow("Min Price", watchlist.minPrice.toString()),
-              _buildRow("Closing Price", watchlist.closingPrice.toString()),
-              _buildRow("Previous Closing Price",
-                  watchlist.previousClosing.toString()),
-              _buildRow("Difference", watchlist.difference.toString()),
+              _buildRow("Volume", "${watchlist.tradedShares} units"),
+              _buildRow("Turnover", "Rs. ${watchlist.amount}"),
+              _buildRow("Max Price", "Rs. ${watchlist.maxPrice}"),
+              _buildRow("Min Price", "Rs. ${watchlist.minPrice}"),
+              _buildRow("Closing Price", "Rs. ${watchlist.closingPrice}"),
+              _buildRow(
+                  "Previous Closing Price", "Rs. ${watchlist.previousClosing}"),
+              _buildRow("Difference", "Rs. ${watchlist.difference}"),
             ],
           ),
           Expanded(

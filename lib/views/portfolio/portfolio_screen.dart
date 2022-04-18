@@ -1,53 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/config/app_links.dart';
+import 'package:frontend/controllers/transaction_controller.dart';
+import 'package:frontend/controllers/watchlist_controller.dart';
 import 'package:frontend/widgets/label_text.dart';
 import 'package:get/get.dart';
 
 class PortfolioScreen extends StatelessWidget {
   PortfolioScreen({Key? key}) : super(key: key);
 
-  final List portfolioData = [
-    {
-      "stock_name": "JBBL",
-      "units": 100,
-      "ltp": 450,
-      "current_value": 45000,
-      "investment": 40000,
-      "overall_profit": 5000,
-      "gain_percent": 30.5,
-      "today_profit": 390,
-      "targets": [480, 520, 550],
-      "stop_loss": 420,
-    },
-    {
-      "stock_name": "NABIL",
-      "units": 500,
-      "ltp": 1100,
-      "current_value": 45000,
-      "investment": 40000,
-      "overall_profit": 5000,
-      "gain_percent": 30.5,
-      "today_profit": 390,
-      "targets": [480, 520, 550],
-      "stop_loss": 420,
-    },
-    {
-      "stock_name": "HDL",
-      "units": 50,
-      "ltp": 4400,
-      "current_value": 45000,
-      "investment": 40000,
-      "overall_profit": 5000,
-      "gain_percent": 30.5,
-      "today_profit": 390,
-      "targets": [480, 520, 550],
-      "stop_loss": 420,
-    }
-  ];
+  final TransactionController transactionController =
+      Get.find<TransactionController>();
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    var today = DateTime.now();
 
     return SafeArea(
       child: Scaffold(
@@ -118,7 +85,8 @@ class PortfolioScreen extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text("As of 2022/02/03",
+                            Text(
+                                "As of ${today.year}/${today.month}/${today.day}",
                                 style: Theme.of(context)
                                     .textTheme
                                     .subtitle2!
@@ -146,77 +114,124 @@ class PortfolioScreen extends StatelessWidget {
                       .copyWith(color: Theme.of(context).colorScheme.primary)),
             ),
             Divider(height: 0),
-            Expanded(
-              child: ListView.builder(
-                itemCount: portfolioData.length,
-                itemBuilder: (BuildContext context, int index) {
-                  var item = portfolioData[index];
-                  return ExpansionTile(
-                    title: Text(item["stock_name"],
-                        style: Theme.of(context).textTheme.headline6),
-                    subtitle: Text("${item["units"]} units",
-                        style: Theme.of(context).textTheme.subtitle1),
-                    children: [
-                      InkWell(
-                        onTap: () => Get.toNamed(AppLinks.TRANSACTION),
-                        child: Ink(
-                          padding: const EdgeInsets.only(left: 20, top: 20),
-                          color: Colors.grey.shade100,
-                          child: Table(
-                            children: [
-                              TableRow(
-                                children: [
-                                  LabelText(
-                                      label: "LTP",
-                                      value: item["ltp"].toString(),
-                                      textColor: Colors.green),
-                                  LabelText(
-                                      label: "Current Value",
-                                      value: item["current_value"].toString()),
-                                  LabelText(
-                                      label: "Investment",
-                                      value: item["investment"].toString()),
-                                ],
-                              ),
-                              TableRow(
-                                children: [
-                                  LabelText(
-                                      label: "Overall P/L",
-                                      value: item["overall_profit"].toString(),
-                                      textColor: Colors.green),
-                                  LabelText(
-                                      label: "P/L %",
-                                      value: item["gain_percent"].toString(),
-                                      textColor: Colors.green),
-                                  LabelText(
-                                      label: "Today's P/L",
-                                      value: item["today_profit"].toString(),
-                                      textColor: Colors.green),
-                                ],
-                              ),
-                              TableRow(
-                                children: [
-                                  LabelText(
-                                      label: "Targets",
-                                      value: item["targets"].toString()),
-                                  LabelText(
-                                      label: "Stop Loss",
-                                      value: item["stop_loss"].toString()),
-                                  SizedBox(),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  );
-                },
-              ),
-            ),
+            Obx(() {
+              var companies = <String>{};
+              var allTransactions = transactionController.transactions;
+              var allTx = [...allTransactions];
+
+              allTx.retainWhere(
+                  (element) => companies.add(element.stock.companyName));
+
+              var buyUnits = 0;
+              var sellUnits = 0;
+              var currentUnits = 0;
+
+              return Expanded(
+                child: ListView.builder(
+                    itemCount: companies.length,
+                    itemBuilder: (context, index) {
+                      var company = companies.toList()[index];
+
+                      var buyTransactions = allTransactions
+                          .where((element) =>
+                              element.stock.companyName == company &&
+                              element.type == "Buy")
+                          .toList();
+                      buyTransactions.forEach((element) {
+                        buyUnits += element.units;
+                      });
+
+                      var sellTransactions = allTransactions
+                          .where((element) =>
+                              element.stock.companyName == company &&
+                              element.type == "Sell")
+                          .toList();
+                      sellTransactions.forEach((element) {
+                        sellUnits += element.units;
+                      });
+
+                      print("Buy units $buyUnits");
+                      print("Sell units $sellUnits");
+
+                      currentUnits = buyUnits - sellUnits;
+                      buyUnits = 0;
+                      sellUnits = 0;
+
+                      return _buildHoldingsTile(context, company, currentUnits);
+                    }),
+              );
+            }),
           ],
         ),
       ),
+    );
+  }
+
+  _buildHoldingsTile(
+      BuildContext context, String companyName, int currentUnits) {
+    var stock = WatchlistController.instance.getWatchlistInfo(companyName);
+
+    var currentValue = stock.closingPrice * currentUnits;
+    var investment = 10000;
+    var overallPL = investment - currentValue;
+    var overallPLPercent = (overallPL / investment) * 100;
+    var todaysPL = 50;
+
+    return ExpansionTile(
+      title: Text(companyName, style: Theme.of(context).textTheme.headline6),
+      subtitle: Text("$currentUnits units",
+          style: Theme.of(context).textTheme.subtitle1),
+      children: [
+        InkWell(
+          onTap: () => Get.toNamed(AppLinks.TRANSACTION),
+          child: Ink(
+            padding: const EdgeInsets.only(left: 20, top: 20),
+            color: Colors.grey.shade100,
+            child: Table(
+              children: [
+                TableRow(
+                  children: [
+                    LabelText(
+                        label: "LTP",
+                        value: stock.closingPrice.toString(),
+                        textColor: Colors.green),
+                    LabelText(
+                        label: "Current Value", value: currentValue.toString()),
+                    LabelText(
+                        label: "Investment", value: investment.toString()),
+                  ],
+                ),
+                TableRow(
+                  children: [
+                    LabelText(
+                        label: "Overall P/L",
+                        value: overallPL.toString(),
+                        textColor: Colors.green),
+                    LabelText(
+                        label: "P/L %",
+                        value: overallPLPercent.toString(),
+                        textColor: Colors.green),
+                    LabelText(
+                        label: "Today's P/L",
+                        value: todaysPL.toString(),
+                        textColor: Colors.green),
+                  ],
+                ),
+                // TableRow(
+                //   children: [
+                //     LabelText(
+                //         label: "Targets", value: item["targets"].toString()),
+                //     LabelText(
+                //         label: "Stop Loss",
+                //         value: item["stop_loss"].toString()),
+                //     SizedBox(),
+                //   ],
+                // ),
+              ],
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

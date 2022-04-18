@@ -5,6 +5,8 @@ import 'package:frontend/models/watchlist_model.dart';
 import 'package:get/get.dart';
 
 class WatchlistController extends GetxController {
+  static final WatchlistController instance = Get.find();
+
   final Rx<List<Watchlist>> _watchlists = Rx<List<Watchlist>>([]);
   List<Watchlist> get watchlists => _watchlists.value;
 
@@ -52,5 +54,10 @@ class WatchlistController extends GetxController {
     } catch (e) {
       print(e);
     }
+  }
+
+  Watchlist getWatchlistInfo(String companyName) {
+    return _watchlists.value
+        .firstWhere((element) => element.companyName == companyName);
   }
 }

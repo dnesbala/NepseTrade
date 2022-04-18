@@ -8,7 +8,7 @@ class TransactionScreen extends StatelessWidget {
   TransactionScreen({Key? key}) : super(key: key);
 
   final TransactionController transactionController =
-      Get.find<TransactionController>();
+      Get.put(TransactionController());
 
   final List<Tab> tabs = [
     Tab(

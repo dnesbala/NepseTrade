@@ -24,7 +24,7 @@ class TransactionTile extends StatelessWidget {
     return Column(
       children: [
         ListTile(
-          onTap: () => Get.toNamed(AppLinks.STOCKDETAIL),
+          onTap: () {},
           title: Text(name),
           subtitle: Text("${date.year}/${date.month}/${date.day}",
               style: Theme.of(context).textTheme.subtitle2),

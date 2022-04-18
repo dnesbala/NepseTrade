@@ -46,6 +46,7 @@ class TransactionController extends GetxController {
         totalAmount: units * price,
         date: DateTime.now(),
         type: type,
+        stopLoss: stopLoss,
       );
 
       await fireStore
